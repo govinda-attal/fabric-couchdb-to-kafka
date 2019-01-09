@@ -1,5 +1,7 @@
 # Hyperledger Fabric Blockchain world-state data (CouchDB) on Kafka!
 
+![alt text](soln-arch.jpg "Solution Architecture")
+
 ## start fabric docker network
 
 > This is a copy from https://github.com/hyperledger/fabric-samples
