@@ -97,16 +97,43 @@ services:
     networks:
       - basic
 
-  # kafka-connect-ui:
-  #   image: landoop/kafka-connect-ui
-  #   hostname: kafka-connect-ui
-  #   container_name: kafka-connect-ui
-  #   ports:
-  #     - "8003:8000"
-  #   environment:
-  #     CONNECT_URL: "http://kafka-connect:8083/"
-  #     PROXY: "true"
-  #   depends_on:
-  #     - kafka-connect
-  #   networks:
-  #     - basic
+  kafka-connect-ui:
+    image: landoop/kafka-connect-ui
+    hostname: kafka-connect-ui
+    container_name: kafka-connect-ui
+    ports:
+      - "8003:8000"
+    environment:
+      CONNECT_URL: "http://kafka-connect:8083/"
+      PROXY: "true"
+    depends_on:
+      - kafka-connect
+    networks:
+      - basic
+
+  postgres-db:
+    container_name: postgres-db
+    hostname: postgres-db
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: fabricdb
+    ports: 
+      - 5432:5432
+    #volumes:
+      # - ./data/explorer-db-data:/var/lib/postgresql/
+      # - ./explorer-db-setup:/scripts
+      # - ./explorer-db-setup:/docker-entrypoint-initdb.d
+    networks:
+      - basic   
+
+  db-adminer:
+    container_name: db-adminer
+    image: adminer
+    restart: always
+    ports:
+      - 9880:8080
+    networks:
+      - basic
